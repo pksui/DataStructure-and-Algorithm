@@ -1,0 +1,25 @@
+project:
+  type: book
+
+book:
+  title: "HUAWEIOD"
+  author: "Norah Jones"
+  date: "2024/5/18"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - Stack.qmd
+    - Queue.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+
