@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: docs
 
 book:
   title: "HUAWEIOD"
@@ -10,6 +11,7 @@ book:
     - intro.qmd
     - Stack.qmd
     - Queue.qmd
+    - Hash.qmd
     - summary.qmd
     - references.qmd
 

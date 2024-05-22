@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>HUAWEIOD - 2&nbsp; 栈</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Queue.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Stack.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">栈</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">HUAWEIOD</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Stack.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">栈</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Queue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">队列</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Hash.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">哈希</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#华为od真题" id="toc-华为od真题" class="nav-link active" data-scroll-target="#华为od真题"><span class="header-section-number">2.1</span> 华为OD真题</a>
+  <ul class="collapse">
+  <li><a href="#栈2024d-密码输入检测" id="toc-栈2024d-密码输入检测" class="nav-link" data-scroll-target="#栈2024d-密码输入检测"><span class="header-section-number">2.1.1</span> 【栈】2024D-密码输入检测</a></li>
+  <li><a href="#栈2023c-火星文计算2" id="toc-栈2023c-火星文计算2" class="nav-link" data-scroll-target="#栈2023c-火星文计算2"><span class="header-section-number">2.1.2</span> 【栈】2023C-火星文计算2</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">栈</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="华为od真题" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="华为od真题"><span class="header-section-number">2.1</span> 华为OD真题</h2>
+<section id="栈2024d-密码输入检测" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="栈2024d-密码输入检测"><span class="header-section-number">2.1.1</span> <a href="https://oj.algomooc.com/problem.php?id=2605">【栈】2024D-密码输入检测</a></h3>
+<p><strong>题目描述</strong></p>
+<p>给定用户密码输入流 <code>input</code>，输入流中字符<code>&lt;</code>表示退格，可以清除前一个输入的字符，请你编写程序，输出最终得到的密码字符，并判断密码是否满足如下的密码安全要求。 密码安全要求如下：</p>
+<ol type="1">
+<li>密码长度&gt;=8;</li>
+<li>密码至少需要包含 1 个大写字母;</li>
+<li>密码至少需要包含 1 个小写字母;</li>
+<li>密码至少需要包含 1 个数字;</li>
+<li>密码至少需要包含 1 个字母和数字以外的非空白特殊字符</li>
+</ol>
+<p>注意空串退格后仍然为空串，且用户输入的字符串不包含<code>&lt;</code>字符和空白字符。</p>
+<p><strong>输入描述</strong></p>
+<p>用一行字符串表示输入的用户数据，输入的字符串中’&lt;’字符标识退格，用户输入的字符串不包含空白字符，例如：<code>ABC&lt;c89%000&lt;</code></p>
+<p><strong>输出描述</strong></p>
+<p>输出经过程序处理后，输出的实际密码字符串，并输出改密码字符串是否满足密码安全要求。两者间由’,’分隔， 例如：<code>ABc89%00,true</code></p>
+<p><strong>示例</strong></p>
+<blockquote class="blockquote">
+<p>输入：ABC&lt;c89%000&lt;</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>输出：ABc89%00,true</p>
+</blockquote>
+<p><strong>解题思路</strong></p>
+<p>我认为这道题是需要考虑两种特殊情况，第一种是输入出现了空格，第二种是输入出现了<code>&lt;</code>。如果是第一种情况，直接略过即可，要是第二种情况就比较复杂，我们需要把前面一个 存入的答案字符删去，而且如果前面没有答案字符的话，就略过。这意味着我们每次读取输入的字符串的内容，并不是存入即好，有些元素是要被抛弃掉的，而且那些被抛弃掉的元素 都是刚刚放入的或者是刚刚放入不久的。</p>
+<p>这里就很容易想到用栈的方式，当遇到除了<code>&lt;</code>和空格的字符时，我们把它存入栈中。当遇到<code>&lt;</code>时，我们把栈中的最上面的元素弹出来（这里还要考虑一下栈为空的情况），遍历之后得到 的Stack是一个list。之前我还想如何把Stack中的数据按照字符串的形式表现出来，本来想的是也是在栈中取数据的方式，从上面一个一个取，后来想到，它就是一个list（），我可以直接 按照list的顺序通过<code>"".join(list)</code>的形式变成字符串。</p>
+<p>最终还是要看看密码的字符串是否符合规则，这里用了<code>any()</code>函数来判断五条规定是否成立，然后返回密码内容和判断对错的情况，最后还是有一些小插曲，在<code>print()</code>操作中有一些小细节 要注意一下。</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 首先把字符串输入进来，用变量ex储存</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ex <span class="op">=</span> <span class="bu">input</span>()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#我们需要返回密码是否有效，所以要设置一个bool的变量</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>isError <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 我们要用一个栈来储存输入的字符串内容，但是不应该包含‘&lt;’，所以每次一旦遇到‘&lt;’，就该停下来看看</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Stack <span class="op">=</span> <span class="bu">list</span>()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 开始进入一个循环，逐个读取字符串的内容</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ch <span class="kw">in</span> ex:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 目前看来字符串的内容就分为两类，一类是‘&lt;’，另一类是其他符号</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ch <span class="op">==</span> <span class="st">'&lt;'</span>:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 这里注意一下，如果栈中没有数据了，我们不能弹出最上面的数据，所以一定要看看栈是否为空</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> Stack:</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      Stack.pop()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> ch <span class="op">==</span> <span class="st">" "</span>: <span class="co"># 如果是空白字符，不能算入密码内</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">continue</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:<span class="co"># 这是其他符号的情况</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    Stack.append(ch)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 结束遍历之后，我们会得到一个list，这个按照list从0到n-1的顺序就是密码的内容了，现在我们需要把密码展现出来并且看看它是否合理</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 首先来看看它是否长度大于等于8</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>flag1 <span class="op">=</span> <span class="bu">len</span>(Stack) <span class="op">&gt;=</span> <span class="dv">8</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 然后来看栈里面是否有大写字母的存在，如果有的话，就返回对，如果一个都没有的话就返回错，这里用到any()函数</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># any函数是内置函数（就是Python自带的函数），用于判断列表、远足等结构中是否至少有一个元素为真。如果都不是真的话，返回否；至少有一个为真的话，返回是。</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>flag2 <span class="op">=</span> <span class="bu">any</span>(x.isupper() <span class="cf">for</span> x <span class="kw">in</span> Stack)  <span class="co"># 这里注意括号里的整体是一个list的生成器，其中每一个元素都是bool类型</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">#检测是否有小写字母</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>flag3 <span class="op">=</span> <span class="bu">any</span>(x.islower() <span class="cf">for</span> x <span class="kw">in</span> Stack)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">#检测是否有数字</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>flag4 <span class="op">=</span> <span class="bu">any</span>(x.isdigit() <span class="cf">for</span> x <span class="kw">in</span> Stack)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 检测是否有除了空白字符外的特殊字符</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>flag5 <span class="op">=</span> <span class="bu">any</span>( (<span class="kw">not</span> x.isalpha()) <span class="kw">and</span> (<span class="kw">not</span> x.isdigit()) <span class="cf">for</span> x <span class="kw">in</span> Stack)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 如果五种情况都对的话，那么返回的情况是对，否则是错</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>isError <span class="op">=</span> <span class="kw">not</span> (flag1 <span class="kw">and</span> flag2 <span class="kw">and</span> flag3 <span class="kw">and</span> flag4 <span class="kw">and</span> flag5)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">#用`"".join(list)`把列表里面的每个元素合起来变成一个字符串</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">""</span>.join(Stack)<span class="op">+</span><span class="st">","</span><span class="op">+</span>(<span class="st">'true'</span> <span class="cf">if</span> <span class="kw">not</span> isError <span class="cf">else</span> <span class="st">'false'</span>) )</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co"># 最后一行操作还挺复杂的，如果最后的if和else不加括号的话，测试结果只能对一半，你猜猜为什么？</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="栈2023c-火星文计算2" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="栈2023c-火星文计算2"><span class="header-section-number">2.1.2</span> <a href="https://oj.algomooc.com/problem.php?id=2607">【栈】2023C-火星文计算2</a></h3>
+<p><strong>题目描述</strong></p>
+<p>已知火星人使用的运算符号为<code>#</code>、<code>$</code>，他们与地球人的等价公式如下：</p>
+<ul>
+<li><code>x#y = 4*x + 3*y + 2</code></li>
+<li><code>x$y = 2*x + y + 3</code></li>
+</ul>
+<p>其中<code>x</code>与<code>y</code>是无符号整数，地球人公式按照C语言规则进行计算，火星人公式中的<code>#</code>符优先级高于<code>$</code>，相同的运算符按从左到右的顺序计算。</p>
+<p><strong>输入描述</strong></p>
+<p>火星人字符串表达式结尾不带回车换行</p>
+<p>字符串为仅有无符号整数和操作符组成的计算表达式</p>
+<ol type="1">
+<li>用例保证字符串中操作数与操作符之间没有任何分隔符</li>
+<li>用例保证操作数取值范围为<code>32</code>位无符号整数</li>
+<li>保证输入以及计算结果不会出现整型溢出</li>
+<li>保证输入的字符串为合法的求值报文，例如：<code>123#4&amp;576$78</code></li>
+<li>保证不会出现非法的求值报文
+<ul>
+<li><code>#4$5</code>这种缺少操作数</li>
+<li><code>4$5#</code>这种缺少操作数</li>
+<li><code>4#$5</code>这种缺少操作数</li>
+<li><code>4 $5</code>有空格</li>
+<li><code>3+4-5*6/7</code>有其他操作符</li>
+<li><code>12345678987654321$54321</code>32位整数溢出</li>
+</ul></li>
+</ol>
+<p><strong>输出描述</strong></p>
+<p>根据火星人字符串输出计算结果，结尾不带回车换行</p>
+<p><strong>实例</strong></p>
+<blockquote class="blockquote">
+<p>输入：7#6$5#12</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>输出：157</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>说明：<code>7#6$5#12 = (4*7 + 3*6 + 2)$5#12 = 48$(4 * 5 + 3 * 12 + 2) = 48$58 = 2 * 48 + 58 + 3 = 157</code></p>
+</blockquote>
+<p><strong>解题思路</strong></p>
+<p>这道题看似是一道计算题，定义了两种运算，其中的#运算比$运算优先级更高，而且也是从左往右计算，这特别像乘法与加法运算一样。按照人类的计算来讲，就是挨个读取输入的数据和运算符号，并且及时计算。但是及时挨个输入，我也不能一遇到数据就可以进行计算，万一后面的计算符号优先等级更高，我就必须先把前面算得的数据放起来，开始进行后面的数据计算，然后再把整体从左往右进行计算。</p>
+<p>通过上面叙述，这里注意到题目的特性，既要读取数据，又要计算数据，有时还要搁置数据，并且数据不会被搁置的太长。这很显然要用栈来操作，如果被处理的数据总是那些很早之前就存入进去的，我们就要用队列来实现。</p>
+<p>对于读取数据好说，看到数据就记下，重要的是什么时候把它放到栈里面去呢？有两个选择：</p>
+<ul>
+<li>完整地读完一个数据，就存储到栈里面去</li>
+<li>等遇到计算符号时，把数据存储到栈里面去</li>
+</ul>
+<p>如果是第一种情况，我们不仅要读取数据，还要看数据下一位是否是运算符号，如果是运算符号，我们就停止输入数字，把所得到的数字进行整合化成一个数据，然后把它存到栈中去。</p>
+<p>如果是第二种情况，我们不用考虑已经读取到的字符是否真的构成一个完整的数据，只要我遇到了一个运算字符就说明前面所有的输入数字字符构成一个数据，那么当我遇到数字字符的时候，只需把它记下，再加上前面的数据*10即可。</p>
+<p>貌似第二种方式更加便捷一些，因为如果是第一种方式，我要提前预判后面的操作，读取数据时不能用for ch in s的操作，只能是 for i in range(0,len - 1)，这样也不是不行，但是肯定不如前面那样逻辑清楚，所以一般我是不愿意那样做的。第二种方式不用提前预判，这在逻辑和代码上减缓了我们的压力，谁都不愿意循环中套一个循环。</p>
+<p>这样压力就转移到了遇到计算字符的条件下该执行什么样的操作，这里还有两种情况：</p>
+<ul>
+<li>遇到低优先级计算符</li>
+<li>遇到高优先级计算符</li>
+</ul>
+<p>如果是第二种情况，毫无疑问马上进行计算，把栈中最上面的两个元素弹出，然后再把计算的结果放入栈中。但是别忘了运算符号在要计算了两个数据中间，所以还缺一个数据不能进行计算。要等到下一个数据进栈后，马上进行计算，下一个数据什么时候进栈呢？就是遇见下一个运算符，这里注意不管是什么等级的运算符，我们都要去判断，除了把数据进栈后，是否还要进行运算。</p>
+<p>当第一种情况遇见低等级的计算符时，有下面两种情况：</p>
+<ul>
+<li><code>4#2&amp;4</code></li>
+<li><code>4$2$4</code></li>
+</ul>
+<p>第一种情况，很显然我们要马上对4和2进行计算。第二种情况，不用进行计算直接存储数据即可。如何实现这样的操作呢？我们就要在全局中设立一个变量记录是否上次遇见的计算符是高等级的计算符，如果是就计算，如果不是就不计算。</p>
+<p>当进行完循环的时候，我们有个bug，就是最后一个数字我们无法让它存入栈中，而题目中说结尾没有任何其他字符，而我们让数据进栈并且计算只有一种情况，那就是遇见非数字的情况，那么我们可以人为的改变输入的字符串，在最后我们可以加一个“ ”空格进去，这时读取玩最后一个数字的时候，接着读取到了空格，这时就可以针对最后一个数据进行存储计算了，最终得到了进行完最高等级运算的数据列表。</p>
+<p>然后要按照列表里的数据，按照顺序一个挨着一个进行低等级计算。肯定要进行遍历，但是不能一上来就从第一个开始遍历。我们先提取第一个数据，然后从第二个数据开始遍历，首先跟第二个数据跟第一个数据进行计算，得出来的结果放到变量中，遍历第三个时，跟这个变量进行计算，得出来的结果再放入到同样的变量中，最终得出来的结果就是按照顺序计算低等级运算的。</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取字符串</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="bu">input</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> s <span class="op">+</span> <span class="st">" "</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">这里有两个运算，无论是什么逻辑解决这道题，我们都需要大量应用这两个运算，如果每次</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">都按照题目的运算顺序去写出来的话，太过麻烦，所以我们要设立两个运算函数，这样如果</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">要进行运算时，直接调用即可。</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cal_well(x,y):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">4</span> <span class="op">*</span> x <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> y <span class="op">+</span> <span class="dv">2</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cal_dollor(x,y):</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> y <span class="op">+</span> <span class="dv">3</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">这里我们思考一下，对于进行例如7#6$5#12这样的运算，需要对数据进行存储，需要我们搞清楚优先级顺序。</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">按照正常逻辑，我们应该先进行#运算，然后在进行$运算。也就是说我们不能直接把所有的数据直接存储起</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">来，我们首先应该计算完#运算之后，把所有的数据存储起来，在按照顺序把数据进行$运算。那现在的问题</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">就是如何计算完#之后，把数据按照顺序存储起来？很明显，我们要按照栈的方式进行数据存储，当遇到#的</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">时候，把两个数据进行运算得到的结果再储存到栈中，这样能保持栈中的元素是进行#运算之后的元素，遇到</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">$时，什么都不干，继续存储$之后的数字（因为我们只计算#），最终得到的栈的元素就是我们进行完#运算</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">之后要进行$的数据。</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 构建存储数据的栈</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>store <span class="op">=</span> <span class="bu">list</span>()</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>num <span class="op">=</span> <span class="dv">0</span> <span class="co"># 用于储存数据</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>meetWell <span class="op">=</span> <span class="va">False</span>  <span class="co"># 是否遇到#号</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 遍历字符串</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ch <span class="kw">in</span> s:</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ch.isdigit():</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#数字有可能是两位数或三位数以上，所以不能直接存入栈中，我们要让之前的数据乘上十倍再加现在的数</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> num <span class="op">*</span> <span class="dv">10</span> <span class="op">+</span> <span class="bu">int</span>(ch)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:<span class="co"># 这里是#和$的情况</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">#首先遇到这个最高优先级的计算符号，我们要把之前的数据存储起来,并且要把单个数据存储num归零</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">#这样好进行下一个数据的存储</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    store.append(num)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 如果是进行'4 # 3 $ 5'的计算，我们到这步只是把4存储了起来，到3的时候必须让4跟3进行#运算后得到的数据</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 存储到栈中</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">    现在面临两个选择，第一个选择是在遇到#号时，直接进行计算，但是下一个数字我们还没有把它存入到栈中；</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co">    第二个选择是等到下一个数字时，我们把栈中最上面的元素弹出来，进行计算然后放到栈中。</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">    这里我选择第一个选择，为什么呢？因为如果执行第二个选择的话，就要在ch.isdigit()这里去进行进栈操作，</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co">    这样的话遇到符号要考虑进栈，遇见数字还要考虑进栈。逻辑上，包括代码上都更加复杂了。</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">    那就要在遇见算数符号时，都要考虑一下是否进行计算，很显然，第一次遇见算数符号#时不计算，第二次遇见算数</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co">    符号（不管是否为#）时就要计算了，所以条件我们就不能只是#，应该是‘#$’，这里就直接除了数字之外的else即可。</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co">    另外要注意，我们这里设置一个变量记录是否遇到了#号，我们把这个变量是否改变的代码放在执行计算的后面，这样</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co">    第一次执行else里的代码时，我们没遇到#，就不执行，然后在最后把meetweel改为True，等下次遇见计算符号时，就</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="co">    可以计算了，然后再看遇见的符号是不是#，如果是的话，就改meetWeel为True，如果不是就改为Fasle。这样也就避</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="co">    免了，遇见很多次$符号时，还计算的错误情况，保证只进行#运算。</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> meetWell:</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>      y <span class="op">=</span> store.pop()</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>      x <span class="op">=</span> store.pop()</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>      store.append(cal_well(x,y))</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ch <span class="op">==</span> <span class="st">'#'</span>:</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>      meetWell <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>      meetWell <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="co"># 题目中说输入的字符串结尾最后一个数字后面啥都没有，也就意味着我们的计算逻辑是有缺陷的，</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="co"># 最后一个数字没有经过我们的计算，甚至连进入栈的资格都没有。要想让最后一个数字被计算并且</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="co"># 能进栈，必须在字符串内容读取完了之后，还要再读取一个非数字和计算符号的字符，这样就会</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="co"># 进入到else的状态中，把最后一个数字输入进栈，并且进行判断是否计算，才能得到最终的结果。</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="co"># 接下来就要去计算$了</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="co"># 先把栈中的第一个元素记录下来，通过变量res进行存储，然后挨个循环列表跟res进行$计算，</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="co"># 再把结果记为res，最终就会得出答案</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> store[<span class="dv">0</span>]</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> store[<span class="dv">1</span>:]:</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  res <span class="op">=</span> cal_dollor(res,i)</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(res)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Queue.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">队列</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
