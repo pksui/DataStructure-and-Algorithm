@@ -1,6 +1,5 @@
 # 哈希
-
-## LC217. 存在重复元素
+## [LC217. 存在重复元素](https://leetcode.cn/problems/contains-duplicate/description/)
 ### 题目描述
 给你一个整数数组`nums`。如果任一值在数组中出现**至少两次**，返回`true`;如果数组中每个元素互不相同，返回`false`。
 
@@ -21,3 +20,446 @@
 > 输入：nums = [1,1,1,3,3,4,3,2,4,2]
 
 > 输出：true
+
+### 解题思路
+首先应该逐个读取输入的列表中的数据，并把它记录下来储存到一个数据结构中去，如果接下来我们读取到的数据跟数据结构中的数据重复，则说明原来输入的列表中至少有个元素出现了两次，而且只要一发现就可以直接返回true，特别迅速。
+
+问题是用什么数据结构来存储读取的数据，其实列表也行，元组也行。因为我们每读取一次数据后，都要和存储的数据结构进行对比，看看有没有重复的，那列表和元组都能执行这个功能。
+
+### 代码展示
+
+```{python}
+#| eval: false
+
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        #定义一个储存的数据结构
+        store = set()
+
+        #遍历传入的list
+        for ch in nums:
+            if ch in store:#查看是否有重复
+                return True#直接返回True，然后打断循环，结束任务
+            else:
+                store.add(ch)
+        # 如果遍历结束还没有返回bool值，就说明没有一个重复的，那么返回False就对了
+        return False
+```
+
+## [LC349. 两个数组的交集](https://leetcode.cn/problems/intersection-of-two-arrays/description/)
+### 题目描述
+给定两个数组`nums1`和`nums2`，返回它们的`交集`。输出结果中的每个元素一定是**唯一**的。我们可以**不考虑输出结果的顺序**。
+
+示例一：
+
+> 输入：nums1 = [1,2,2,1], nums2 = [2,2]
+
+> 输出：[2]
+
+示例二：
+
+> 输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+
+> 输出：[9, 4]
+
+> 解释：[4, 9]也是可通过的
+
+提示：
+
+- 1 <= nums1.length, nums2.length <= 1000
+- 0 <= nums1[i], nums2[i] <= 1000
+
+### 解题思路
+我们发现给我们的两个数组，其实里面的元素是有重复的，我们最终比较的是两个数组中唯一的元素之交集。
+
+所以，第一步我们要把两个数组化成元素是唯一的数据结构，怎么做呢？直接去用set(list)这种方式，它能返回一个不带重复元素的元组。然后直接返回两个元组的交集即可。
+
+### 代码展示
+```{python}
+#| eval: false
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        nums1 = set(nums1)
+        nums2 = set(nums2)
+        return (list(nums1 & nums2)) # python的交集是&,并集是|
+
+
+```
+
+## [LC242. 有效的字母异位词](https://leetcode.cn/problems/valid-anagram/description/)
+### 题目描述
+给定两个字符串`s`和`t`，编写一个函数来判断`t`是否是`s`的字母异位词。
+
+注意：若`s`和`t`中每个字符出现的次数都相同,则称`s`和`t`互为字母异位词。
+
+示例一：
+
+> 输入：s = "anagram", t = "nagaram"
+
+> 输出：true
+
+示例二：
+
+> 输入: s = "rat", t = "car"
+
+> 输出：false
+
+提示：
+
+- 1 <= s.length, t.length <= 5 * 104
+- `s` 和 `t`仅包含小写字母
+
+### 解题思路
+题目中说输入的两个字符串都只是小写字母，而小写字母一共有二十六个。我们可以设立一个26位长度的list，list中的每一个元素的值都为0。首先去遍历第一个输入的s字符串，如果遇到一个元素把它对应的那个小写字母的位置+1，那么整体遍历完了之后，我们得到的list中的元素对应的位置的数量就是这个字母在这个s字符串中出现的次数。然后紧接着，我们要遍历第二个字符串t，这回不一样了，遇到了小写字母的话，要在对应的位置上减一，如果某个位置上出现了负数，就说明第二个字符串比第一个字符串针对同样的字母至少多一个，那就肯定不是字母异位词，就返回False，如果最后遍历完，数组变成了0，那么就说明两个字符串中对应的小写字母出现的次数相同，返回True。
+
+### 代码展示
+
+```{python}
+#| eval: false
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        #构建一个26位长度的元素为0的数组
+        store = [0] * 26
+        #遍历s
+        for ch in s:
+            #确定遍历的字符是哪个小写字母，它的位置在哪
+            loc = ord(ch) - ord('a')
+            #对应位置加一
+            store[loc] += 1
+        for ch in t:
+            loc = ord(ch) - ord('a')
+            #对应位置减一
+            store[loc] -= 1
+            # 判断是否有小于0的负数出现，如果有，则返回False
+            if store[loc] < 0:
+                return False
+        # 如果一直没返回False，则说明第二个字符串的字符没有比
+        # 第一个字符串中多的，但是也不能返回True，因为万一s比t
+        # 多呢？
+        if sum(store) == 0:
+            return True
+        else:
+            return False
+
+
+```
+
+## [LC383. 赎金信](https://leetcode.cn/problems/ransom-note/description/)
+### 题目描述
+给你两个字符串：`ransomNote`和`magazine`，判断`ransomNote`能不能由`magazine`里面的字符构成。
+
+如果可以，返回`true`；否则返回`false`。
+
+`magazine`中的每个字符只能在`ransomNote`中使用一次。
+
+示例一：
+
+> 输入：ransomNote = "a", magazine = "b"
+
+> 输出: false
+
+示例二：
+
+> 输入：ransomNote = "aa", magazine = "ab"
+
+> 输出：false
+
+示例三：
+
+> 输入：ransomNote = "aa", magazine = "aab"
+
+> 输出：true
+
+提示：
+
+- 1 <= ransomNote.length, magazine.length <= 105
+- `ransomNote`和`magazine`由小写英文字母组成
+
+### 解题思路
+这道题跟上一道题很像啊，应该可以用同样的套路去解题。可以发现，ransomNote中的字符是从magazine中拿的，我们可以设立一个元素全为0的26位长度的list，然后去遍历magazine，遇到小写字母就在对应的位置上+=1，这样遍历完成之后，得到的list是magazine中的每个小写字母的数量。之后遇到ransomNote，我们继续遍历，遇到一个字母就减去一。这样跟上道题一样，如果出现了负数，则说明对应的小写字母ransomNote要比magazine要多，这样就返回False。如果最后每一个字母的数量中都没有小于0的，说明magazine中的字母数量很多，足够ransomNote取，就返回True。
+
+### 代码展示
+
+```{python}
+#| eval: false
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        #构建一个26位长度的元素皆为0的list
+        store = [0] * 26
+        #遍历magazine
+        for ch in magazine:
+            #记录ch对应的位置
+            loc = ord(ch) - ord('a')
+            #ord函数是返回传入字符的Unicode码点，小写字母a到z的码点是连在一起的，
+            #所以ch相减a的ord返回值，就能得出它在26位小写字母中的位置了。
+            store[loc] += 1
+
+        for ch in ransomNote:
+            loc = ord(ch) - ord('a')
+            store[loc] -= 1
+            #判断是否有负数出现，如果出现负数，说明magazine的库存不够了，就返回False
+            if store[loc] < 0:
+                return False
+        #如果magazine的库存不够用，它就不会走到这里。如果走到了这里，说明库存要么刚好够用，要么就多出来一些小写字母
+        #无论哪种情况，这都是允许的，返回True
+        return True
+```
+
+## [【哈希表】2023Q1A-集五福](https://oj.algomooc.com/problem.php?id=2800)
+### 题目描述
+集五福作为近年来大家喜闻乐见迎新春活动，集合爱国福、富强福、和谐福、友善福、敬业福即可分享超级大红包。以0和1组成的长度为5的字符串代表每个人所得到的福卡，每一位代表一种福卡，1表示已经获得该福卡，单类型福卡不超过1张，随机抽取一个小于10人团队，求该团队最多可以集齐多少套五福？
+
+**输入**
+
+输入若干个由0、1组成的长度等于5的字符串，代表团队中每个福卡获得情况
+
+注意：1人也可以是一个团队
+
+注意2:1人可以有0到5张福卡，但福卡不能重复
+
+**输出**
+
+输出该团队最多能凑齐多少套五福
+
+示例一
+
+> 输入：11001,11101
+
+> 输出：0
+
+示例二
+
+> 输入：11101,10111
+
+> 输出：1
+
+### 解题思路
+我们首先应该把输入的字符串根据有多少人分成多少部分，最好化成数字类型，然后把这些部分相加，得到一个五位数据的数据结构，然后这五个数中最少的一个数，就是这些人能凑齐的最多五福。
+
+### 代码展示
+
+```{python}
+#| eval: false
+'''
+要用Counter的API去做这道题，在Counter中输入一个字符串，它会
+返回一个对象，结果展示是Counter（字典），所以特别想一个字典，
+其中key是字符串中的每个字符，value是这个字符串中对应字符的个数。
+然后，因为它是一个对象，你也可以像调取list中的数一样，输出
+Counter[index]，就能把对应的值展现出来。
+'''
+from collections import Counter
+
+# 先开始读取输入的字符串,用split()返回一个数组
+store = input().split(",")
+# 先构建一个Counter对象
+# Counter相对于dict的好处是即使没有这个Index，也可以直接
+# 按照Counter[Index] = value 的方式把值放进去，而不用考虑
+# 指针越界的问题
+c = Counter()
+
+#我们要读取每个人的五福种类的数量，我们以种类作为key，很显然
+#这个种类我们就把它设为0，1等的Index。那我们需要既提取每个人
+#的Index和value。
+
+for ch in store:
+    # enumerate()返回一个对象的index和value·
+    for j,k in enumerate(ch):
+        #如果个人的五福种类对应的数值是0，就代表他没有这个对应的五福
+        #如果个人的五福种类对应的数值是1，就代表他有这个对应的服务
+        #所以如果是1的话，Counter对应的种类数值+1
+        #如果是0的话，就不要改变
+        if k == "1":
+            c[j] += 1
+
+# 把所有人的情况遍历后，我们得到的Counter，包含小组整体各个五福种类
+# 有多少数量的数目。这里会出现两种情况，一是这个小组五个种类的福都有，
+# 那么Counter反应的是每个种类有多少数目；第二种情况是这个小组针对某个
+# 种类的五福连一个都没有，如果是这种情况要直接返回0，如果是第一种情况
+# 要返回五个种类的数目最小值
+
+print(0 if len(c) < 5 else min(c.values()))
+
+```
+
+## [【哈希表】2023Q1A-删除最少字符](https://oj.algomooc.com/problem.php?id=2801)
+### 题目描述
+删除字符串`s`中出现次数最少的字符，如果多个字符出现次数一样则都删除。
+
+**输入**
+
+输入只包含小写字母
+
+**输出描述**
+
+输出删除后剩余的字符串；若删除后字符串长度为`0`，则输出字符串`"empty"`
+
+示例一
+
+> 输入：abcdd
+
+> 输出：dd
+
+示例二
+
+> 输入：aabbccdd
+
+> 输出：empty
+
+### 解题思路
+我们首先应该把字符串输入进来，而且要设置一个数据结构，这个数据结构类似于字典，至于是不是Counter，一会再说。我们要储存的内容是字符为key，对应出现的次数为value。这里看来直接用Counter吧，这样直接输入Counter(str)，我们就能反映出str的字符的个数。
+
+### 代码展示
+```{python}
+#| eval: false
+s = input()
+from collections import Counter
+c = Counter(s)
+#找到存储数据的结构中的元素对应的最小值
+mins = c[min(c)] #min（c）只是返回key，要想去调取里面的value，必须用c[key]
+#查看那些字符是最小的，这里还要设立一个数据结构去储存最小值对应的字符
+minstr = set()
+for ch in c:#这里的ch是c的key
+    if c[ch] == mins:#查看值是否是等于最小值，要调用字典的查找value的办法dict[key]
+        minstr.add(ch)
+#输出的结果设置成变量为res，我们遍历s，如果遍历的字符不是在minstr中，
+#把它放在res中，如果是把它就不加
+res = ''
+for i in s:
+    if i not in minstr:
+        res += i
+#如果返回结果res不为空，就返回它。如果为空，要返回empty
+
+print(res if res else 'empty')
+
+```
+
+## [LC1. 两数之和](https://leetcode.cn/problems/two-sum/description/)
+### 题目描述
+给定一个整数数组`nums`和一个整数目标值`target`，请你在该数组中找出**和为目标值**`target`的那两个**整数**，并返回它们的数组下标。
+
+你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
+
+你可以按任意顺序返回答案。
+
+示例一：
+
+> 输入：nums = [2,7,11,15], target = 9
+
+> 输出：[0,1]
+
+> 解释：因为 nums[0] + nums[1] == 9, 返回[0, 1]。
+
+示例二：
+
+> 输入：nums = [3,2,4], target = 6
+
+> 输出：[1,2]
+
+示例三：
+
+> 输入：nums = [3,3], target = 6
+
+> 输出：[0,1]
+
+提示：
+
+- 2 <= nums.length <= 104
+- -109 <= nums[i] <= 109
+- -109 <= target <= 109
+- **只会存在一个有效答案**
+
+### 解题思路
+这道题让我们返回的结果是数组中的Index，我们可以用一个字典来逐个提取list中的元素和它的index，这里要把index设为字典的value，而把list中的元素的值设为字典的key。为什么这样呢？因为我们遍历字典的时候返回的是key，这样可以直接进行对比，最后返回字典的值正好是list中的Index，比较符合我们的固有观念，数据结构中存在的值是返回的最终结果。
+
+当提取了一个list中的元素后，我们要将target减去这个key，看看剩下的值是不是字典中固有的key，如果是，则直接把提取元素的Index和原有的元素的key合成一个list返回即可。如果不是则进行下一个元素的提取。如果遍历完事之后，还没发现有能返回的情况，就说明这个列表中的元素不能组成target值，我们应该返回False，但是本题说明肯定会有一个解，那咱就不考虑这种情况发生了。
+
+### 代码展示
+
+```{python}
+#| eval: false
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        #构建一个dict，储存遍历数组的信息，以list的值为key，以list的index为值
+        store = dict()
+        #遍历数组，要提取每个元素的值和Index，这里要用enumerate函数
+        for i,j in enumerate(nums):
+            if target - j in store:
+                return [i,store[target - j]] 
+                #这里就显示出了用key来进行dict里内容的对比的好处，如果这个值是dict的key
+                #就可以直接调用value的内容了，相反如果把index作为dict的key，list的元素
+                #作为dict的值，那我们如果要调用dict某一元素特定的key是很难的，但是调用
+                #其的value是很容易的，直接把对应的key输入进去就行了。所以，我们在今后做
+                #算法题的时候，一定要把返回的东西设为字典的value。
+            else:
+                store[j] = i
+
+```
+
+## [LC219. 存在重复元素 II](https://leetcode.cn/problems/contains-duplicate-ii/description/)
+### 题目描述
+给你一个整数数组`nums`和一个整数`k`，判断数组中是否存在两个**不同的索引**`i`和`j`，满足`nums[i] == nums[j]`且`abs(i - j) <= k`。如果存在，返回`true`；否则，返回`false`。
+
+示例一：
+
+> 输入：nums = [1,2,3,1], k = 3
+
+> 输出：true
+
+示例二：
+
+> 输入：nums = [1,0,1,1], k = 1
+
+> 输出：true
+
+示例三：
+
+> 输入：nums = [1,2,3,1,2,3], k = 2
+
+> 输出：false
+
+提示
+
+- 1 <= nums.length <= 105
+- -109 <= nums[i] <= 109
+- 0 <= k <= 105
+
+### 解题思路
+首先我们还是要用dict来去储存nums的信息，因为这里面涉及到两方面的比较，一个是value的比较，另一个是Index的比较。其中第一步要比较的是value，如果value值相同，我们再去比较两个相同值的Index差值。这里把value作为key，把Index作为字典的value。
+
+每遍历一个元素，我们都要把它的值和字典中已有的每个key进行，比较，如果key相同，则进行Index的差值计算。如果这个差值小于k，则说明成功，返回true，如果全部遍历完还没有成功的，那就意味着传入的list里的元素没有符合这个条件的，返回False。
+
+### 代码展示
+```{python}
+#| eval: false
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        #构建一个字典，一般涉及到两个维度的比较都要用字典
+        store = dict()
+        #开始去遍历数组中的元素，提取Index和value
+        for i,j in enumerate(nums):
+            #先判断value是否相等
+            if j in store:
+                #大家想想如果list的value不作为key的话，
+                #想要查看这个value是否在dict中的话，得有
+                #多费劲
+                '''
+                这里要考虑一种情况，比如说输入的例子是[1,2,3,1,1,4,5]，2这种情况，当
+                遍历到第二个1的时候，发现值虽然相同，但是Index的距离太远，这时我们要存储
+                第二个一，我们又是以list的value作为dict的key的。这时储存的就是dict[1]=3。
+                势必要把第一个一给代替掉（字典作为哈希表的特点是不在乎顺序），我们care不care
+                ，我们真正care的是最新的1的index，因为第一个1如果第一次配对失败，它就再也没有
+                机会成功配对了，我们要记录最新的1，因为它是有可能配对的，如果我们用list去储存
+                遍历的元素，就要考虑那个是最新的1了，这里再对比配对的话就非常麻烦，而用字典我们
+                每次储存的都是最新的值所拥有的Index。
+                '''
+                #这里判断index之差是否大于小于等于k
+                if i - store[j] <= k:
+                    return True
+            store[j] = i
+
+        #如果都没有遍历都没有成功，则返回False
+        return False
+
+
+```
+

@@ -9,16 +9,16 @@
   {
     "objectID": "Hash.html#lc217.-存在重复元素",
     "href": "Hash.html#lc217.-存在重复元素",
-    "title": "哈希",
-    "section": "",
-    "text": "给你一个整数数组nums。如果任一值在数组中出现至少两次，返回true;如果数组中每个元素互不相同，返回false。\n示例一：\n\n输入：nums = [1,2,3,1]\n\n\n输出：true\n\n示例二：\n\n输入：nums = [1,2,3,4]\n\n\n输出：false\n\n示例三：\n\n输入：nums = [1,1,1,3,3,4,3,2,4,2]\n\n\n输出：true"
+    "title": "4  哈希",
+    "section": "4.1 LC217. 存在重复元素",
+    "text": "4.1 LC217. 存在重复元素\n\n4.1.1 题目描述\n给你一个整数数组nums。如果任一值在数组中出现至少两次，返回true;如果数组中每个元素互不相同，返回false。\n示例一：\n\n输入：nums = [1,2,3,1]\n\n\n输出：true\n\n示例二：\n\n输入：nums = [1,2,3,4]\n\n\n输出：false\n\n示例三：\n\n输入：nums = [1,1,1,3,3,4,3,2,4,2]\n\n\n输出：true\n\n\n\n4.1.2 解题思路\n首先应该逐个读取输入的列表中的数据，并把它记录下来储存到一个数据结构中去，如果接下来我们读取到的数据跟数据结构中的数据重复，则说明原来输入的列表中至少有个元素出现了两次，而且只要一发现就可以直接返回true，特别迅速。\n问题是用什么数据结构来存储读取的数据，其实列表也行，元组也行。因为我们每读取一次数据后，都要和存储的数据结构进行对比，看看有没有重复的，那列表和元组都能执行这个功能。\n\n\n4.1.3 代码展示\n\nclass Solution:\n    def containsDuplicate(self, nums: List[int]) -&gt; bool:\n        #定义一个储存的数据结构\n        store = set()\n\n        #遍历传入的list\n        for ch in nums:\n            if ch in store:#查看是否有重复\n                return True#直接返回True，然后打断循环，结束任务\n            else:\n                store.add(ch)\n        # 如果遍历结束还没有返回bool值，就说明没有一个重复的，那么返回False就对了\n        return False"
   },
   {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "Summary",
+    "title": "5  Summary",
     "section": "",
-    "text": "Summary\nIn summary, this book has no content whatsoever."
+    "text": "In summary, this book has no content whatsoever."
   },
   {
     "objectID": "references.html",
@@ -131,5 +131,68 @@
     "title": "HUAWEIOD",
     "section": "",
     "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books."
+  },
+  {
+    "objectID": "Hash.html#lc349.-两个数组的交集",
+    "href": "Hash.html#lc349.-两个数组的交集",
+    "title": "4  哈希",
+    "section": "4.2 LC349. 两个数组的交集",
+    "text": "4.2 LC349. 两个数组的交集\n\n4.2.1 题目描述\n给定两个数组nums1和nums2，返回它们的交集。输出结果中的每个元素一定是唯一的。我们可以不考虑输出结果的顺序。\n示例一：\n\n输入：nums1 = [1,2,2,1], nums2 = [2,2]\n\n\n输出：[2]\n\n示例二：\n\n输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]\n\n\n输出：[9, 4]\n\n\n解释：[4, 9]也是可通过的\n\n提示：\n\n1 &lt;= nums1.length, nums2.length &lt;= 1000\n0 &lt;= nums1[i], nums2[i] &lt;= 1000\n\n\n\n4.2.2 解题思路\n我们发现给我们的两个数组，其实里面的元素是有重复的，我们最终比较的是两个数组中唯一的元素之交集。\n所以，第一步我们要把两个数组化成元素是唯一的数据结构，怎么做呢？直接去用set(list)这种方式，它能返回一个不带重复元素的元组。然后直接返回两个元组的交集即可。\n\n\n4.2.3 代码展示\n\nclass Solution:\n    def intersection(self, nums1: List[int], nums2: List[int]) -&gt; List[int]:\n        nums1 = set(nums1)\n        nums2 = set(nums2)\n        return (list(nums1 & nums2)) # python的交集是&,并集是|"
+  },
+  {
+    "objectID": "Hash.html#有效的字母异位词",
+    "href": "Hash.html#有效的字母异位词",
+    "title": "4  哈希",
+    "section": "4.3 242. 有效的字母异位词",
+    "text": "4.3 242. 有效的字母异位词\n\n4.3.1 题目描述\n给定两个字符串s和t，编写一个函数来判断t是否是s的字母异位词。\n注意：若s和t中每个字符出现的次数都相同,则称s和t互为字母异位词。\n示例一：\n\n输入：s = “anagram”, t = “nagaram”\n\n\n输出：true\n\n示例二：\n\n输入: s = “rat”, t = “car”\n\n\n输出：false\n\n提示：\n\n1 &lt;= s.length, t.length &lt;= 5 * 104\ns 和 t仅包含小写字母\n\n\n\n4.3.2 解题思路\n题目中说输入的两个字符串都只是小写字母，而小写字母一共有二十六个。我们可以设立一个26位长度的list，list中的每一个元素的值都为0。首先去遍历第一个输入的s字符串，如果遇到一个元素把它对应的那个小写字母的位置+1，那么整体遍历完了之后，我们得到的list中的元素对应的位置的数量就是这个字母在这个s字符串中出现的次数。然后紧接着，我们要遍历第二个字符串t，这回不一样了，遇到了小写字母的话，要在对应的位置上减一，如果某个位置上出现了负数，就说明第二个字符串比第一个字符串针对同样的字母至少多一个，那就肯定不是字母异位词，就返回False，如果最后遍历完，数组变成了0，那么就说明两个字符串中对应的小写字母出现的次数相同，返回True。\n\n\n4.3.3 代码展示\n\nclass Solution:\n    def isAnagram(self, s: str, t: str) -&gt; bool:\n        #构建一个26位长度的元素为0的数组\n        store = [0] * 26\n        #遍历s\n        for ch in s:\n            #确定遍历的字符是哪个小写字母，它的位置在哪\n            loc = ord(ch) - ord('a')\n            #对应位置加一\n            store[loc] += 1\n        for ch in t:\n            loc = ord(ch) - ord('a')\n            #对应位置减一\n            store[loc] -= 1\n            # 判断是否有小于0的负数出现，如果有，则返回False\n            if store[loc] &lt; 0:\n                return False\n        # 如果一直没返回False，则说明第二个字符串的字符没有比\n        # 第一个字符串中多的，但是也不能返回True，因为万一s比t\n        # 多呢？\n        if sum(store) == 0:\n            return True\n        else:\n            return False"
+  },
+  {
+    "objectID": "Hash.html#lc242.-有效的字母异位词",
+    "href": "Hash.html#lc242.-有效的字母异位词",
+    "title": "4  哈希",
+    "section": "4.3 LC242. 有效的字母异位词",
+    "text": "4.3 LC242. 有效的字母异位词\n\n4.3.1 题目描述\n给定两个字符串s和t，编写一个函数来判断t是否是s的字母异位词。\n注意：若s和t中每个字符出现的次数都相同,则称s和t互为字母异位词。\n示例一：\n\n输入：s = “anagram”, t = “nagaram”\n\n\n输出：true\n\n示例二：\n\n输入: s = “rat”, t = “car”\n\n\n输出：false\n\n提示：\n\n1 &lt;= s.length, t.length &lt;= 5 * 104\ns 和 t仅包含小写字母\n\n\n\n4.3.2 解题思路\n题目中说输入的两个字符串都只是小写字母，而小写字母一共有二十六个。我们可以设立一个26位长度的list，list中的每一个元素的值都为0。首先去遍历第一个输入的s字符串，如果遇到一个元素把它对应的那个小写字母的位置+1，那么整体遍历完了之后，我们得到的list中的元素对应的位置的数量就是这个字母在这个s字符串中出现的次数。然后紧接着，我们要遍历第二个字符串t，这回不一样了，遇到了小写字母的话，要在对应的位置上减一，如果某个位置上出现了负数，就说明第二个字符串比第一个字符串针对同样的字母至少多一个，那就肯定不是字母异位词，就返回False，如果最后遍历完，数组变成了0，那么就说明两个字符串中对应的小写字母出现的次数相同，返回True。\n\n\n4.3.3 代码展示\n\nclass Solution:\n    def isAnagram(self, s: str, t: str) -&gt; bool:\n        #构建一个26位长度的元素为0的数组\n        store = [0] * 26\n        #遍历s\n        for ch in s:\n            #确定遍历的字符是哪个小写字母，它的位置在哪\n            loc = ord(ch) - ord('a')\n            #对应位置加一\n            store[loc] += 1\n        for ch in t:\n            loc = ord(ch) - ord('a')\n            #对应位置减一\n            store[loc] -= 1\n            # 判断是否有小于0的负数出现，如果有，则返回False\n            if store[loc] &lt; 0:\n                return False\n        # 如果一直没返回False，则说明第二个字符串的字符没有比\n        # 第一个字符串中多的，但是也不能返回True，因为万一s比t\n        # 多呢？\n        if sum(store) == 0:\n            return True\n        else:\n            return False"
+  },
+  {
+    "objectID": "Hash.html#lc383.-赎金信",
+    "href": "Hash.html#lc383.-赎金信",
+    "title": "4  哈希",
+    "section": "4.4 LC383. 赎金信",
+    "text": "4.4 LC383. 赎金信\n\n4.4.1 题目描述\n给你两个字符串：ransomNote和magazine，判断ransomNote能不能由magazine里面的字符构成。\n如果可以，返回true；否则返回false。\nmagazine中的每个字符只能在ransomNote中使用一次。\n示例一：\n\n输入：ransomNote = “a”, magazine = “b”\n\n\n输出: false\n\n示例二：\n\n输入：ransomNote = “aa”, magazine = “ab”\n\n\n输出：false\n\n示例三：\n\n输入：ransomNote = “aa”, magazine = “aab”\n\n\n输出：true\n\n提示：\n\n1 &lt;= ransomNote.length, magazine.length &lt;= 105\nransomNote和magazine由小写英文字母组成\n\n\n\n4.4.2 解题思路\n这道题跟上一道题很像啊，应该可以用同样的套路去解题。可以发现，ransomNote中的字符是从magazine中拿的，我们可以设立一个元素全为0的26位长度的list，然后去遍历magazine，遇到小写字母就在对应的位置上+=1，这样遍历完成之后，得到的list是magazine中的每个小写字母的数量。之后遇到ransomNote，我们继续遍历，遇到一个字母就减去一。这样跟上道题一样，如果出现了负数，则说明对应的小写字母ransomNote要比magazine要多，这样就返回False。如果最后每一个字母的数量中都没有小于0的，说明magazine中的字母数量很多，足够ransomNote取，就返回True。\n\n\n4.4.3 代码展示\n\nclass Solution:\n    def canConstruct(self, ransomNote: str, magazine: str) -&gt; bool:\n        #构建一个26位长度的元素皆为0的list\n        store = [0] * 26\n        #遍历magazine\n        for ch in magazine:\n            #记录ch对应的位置\n            loc = ord(ch) - ord('a')\n            #ord函数是返回传入字符的Unicode码点，小写字母a到z的码点是连在一起的，\n            #所以ch相减a的ord返回值，就能得出它在26位小写字母中的位置了。\n            store[loc] += 1\n\n        for ch in ransomNote:\n            loc = ord(ch) - ord('a')\n            store[loc] -= 1\n            #判断是否有负数出现，如果出现负数，说明magazine的库存不够了，就返回False\n            if store[loc] &lt; 0:\n                return False\n        #如果magazine的库存不够用，它就不会走到这里。如果走到了这里，说明库存要么刚好够用，要么就多出来一些小写字母\n        #无论哪种情况，这都是允许的，返回True\n        return True"
+  },
+  {
+    "objectID": "Hash.html#哈希表2023q1a-集五福",
+    "href": "Hash.html#哈希表2023q1a-集五福",
+    "title": "4  哈希",
+    "section": "4.5 【哈希表】2023Q1A-集五福",
+    "text": "4.5 【哈希表】2023Q1A-集五福\n\n4.5.1 题目描述\n集五福作为近年来大家喜闻乐见迎新春活动，集合爱国福、富强福、和谐福、友善福、敬业福即可分享超级大红包。以0和1组成的长度为5的字符串代表每个人所得到的福卡，每一位代表一种福卡，1表示已经获得该福卡，单类型福卡不超过1张，随机抽取一个小于10人团队，求该团队最多可以集齐多少套五福？\n输入\n输入若干个由0、1组成的长度等于5的字符串，代表团队中每个福卡获得情况\n注意：1人也可以是一个团队\n注意2:1人可以有0到5张福卡，但福卡不能重复\n输出\n输出该团队最多能凑齐多少套五福\n示例一\n\n输入：11001,11101\n\n\n输出：0\n\n示例二\n\n输入：11101,10111\n\n\n输出：1\n\n\n\n4.5.2 解题思路\n我们首先应该把输入的字符串根据有多少人分成多少部分，最好化成数字类型，然后把这些部分相加，得到一个五位数据的数据结构，然后这五个数中最少的一个数，就是这些人能凑齐的最多五福。\n\n\n4.5.3 代码展示\n\n'''\n要用Counter的API去做这道题，在Counter中输入一个字符串，它会\n返回一个对象，结果展示是Counter（字典），所以特别想一个字典，\n其中key是字符串中的每个字符，value是这个字符串中对应字符的个数。\n然后，因为它是一个对象，你也可以像调取list中的数一样，输出\nCounter[index]，就能把对应的值展现出来。\n'''\nfrom collections import Counter\n\n# 先开始读取输入的字符串,用split()返回一个数组\nstore = input().split(\",\")\n# 先构建一个Counter对象\n# Counter相对于dict的好处是即使没有这个Index，也可以直接\n# 按照Counter[Index] = value 的方式把值放进去，而不用考虑\n# 指针越界的问题\nc = Counter()\n\n#我们要读取每个人的五福种类的数量，我们以种类作为key，很显然\n#这个种类我们就把它设为0，1等的Index。那我们需要既提取每个人\n#的Index和value。\n\nfor ch in store:\n    # enumerate()返回一个对象的index和value·\n    for j,k in enumerate(ch):\n        #如果个人的五福种类对应的数值是0，就代表他没有这个对应的五福\n        #如果个人的五福种类对应的数值是1，就代表他有这个对应的服务\n        #所以如果是1的话，Counter对应的种类数值+1\n        #如果是0的话，就不要改变\n        if k == \"1\":\n            c[j] += 1\n\n# 把所有人的情况遍历后，我们得到的Counter，包含小组整体各个五福种类\n# 有多少数量的数目。这里会出现两种情况，一是这个小组五个种类的福都有，\n# 那么Counter反应的是每个种类有多少数目；第二种情况是这个小组针对某个\n# 种类的五福连一个都没有，如果是这种情况要直接返回0，如果是第一种情况\n# 要返回五个种类的数目最小值\n\nprint(0 if len(c) &lt; 5 else min(c.values()))"
+  },
+  {
+    "objectID": "Hash.html#哈希表2023q1a-删除最少字符",
+    "href": "Hash.html#哈希表2023q1a-删除最少字符",
+    "title": "4  哈希",
+    "section": "4.6 【哈希表】2023Q1A-删除最少字符",
+    "text": "4.6 【哈希表】2023Q1A-删除最少字符\n\n4.6.1 题目描述\n删除字符串s中出现次数最少的字符，如果多个字符出现次数一样则都删除。\n输入\n输入只包含小写字母\n输出描述\n输出删除后剩余的字符串；若删除后字符串长度为0，则输出字符串\"empty\"\n示例一\n\n输入：abcdd\n\n\n输出：dd\n\n示例二\n\n输入：aabbccdd\n\n\n输出：empty\n\n\n\n4.6.2 解题思路\n我们首先应该把字符串输入进来，而且要设置一个数据结构，这个数据结构类似于字典，至于是不是Counter，一会再说。我们要储存的内容是字符为key，对应出现的次数为value。这里看来直接用Counter吧，这样直接输入Counter(str)，我们就能反映出str的字符的个数。\n\n\n4.6.3 代码展示\n\ns = input()\nfrom collections import Counter\nc = Counter(s)\n#找到存储数据的结构中的元素对应的最小值\nmins = c[min(c)] #min（c）只是返回key，要想去调取里面的value，必须用c[key]\n#查看那些字符是最小的，这里还要设立一个数据结构去储存最小值对应的字符\nminstr = set()\nfor ch in c:#这里的ch是c的key\n    if c[ch] == mins:#查看值是否是等于最小值，要调用字典的查找value的办法dict[key]\n        minstr.add(ch)\n#输出的结果设置成变量为res，我们遍历s，如果遍历的字符不是在minstr中，\n#把它放在res中，如果是把它就不加\nres = ''\nfor i in s:\n    if i not in minstr:\n        res += i\n#如果返回结果res不为空，就返回它。如果为空，要返回empty\n\nprint(res if res else 'empty')"
+  },
+  {
+    "objectID": "Hash.html#lc1.-两数之和",
+    "href": "Hash.html#lc1.-两数之和",
+    "title": "4  哈希",
+    "section": "4.7 LC1. 两数之和",
+    "text": "4.7 LC1. 两数之和\n\n4.7.1 题目描述\n给定一个整数数组nums和一个整数目标值target，请你在该数组中找出和为目标值target的那两个整数，并返回它们的数组下标。\n你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。\n你可以按任意顺序返回答案。\n示例一：\n\n输入：nums = [2,7,11,15], target = 9\n\n\n输出：[0,1]\n\n\n解释：因为 nums[0] + nums[1] == 9, 返回[0, 1]。\n\n示例二：\n\n输入：nums = [3,2,4], target = 6\n\n\n输出：[1,2]\n\n示例三：\n\n输入：nums = [3,3], target = 6\n\n\n输出：[0,1]\n\n提示：\n\n2 &lt;= nums.length &lt;= 104\n-109 &lt;= nums[i] &lt;= 109\n-109 &lt;= target &lt;= 109\n只会存在一个有效答案\n\n\n\n4.7.2 解题思路\n这道题让我们返回的结果是数组中的Index，我们可以用一个字典来逐个提取list中的元素和它的index，这里要把index设为字典的value，而把list中的元素的值设为字典的key。为什么这样呢？因为我们遍历字典的时候返回的是key，这样可以直接进行对比，最后返回字典的值正好是list中的Index，比较符合我们的固有观念，数据结构中存在的值是返回的最终结果。\n当提取了一个list中的元素后，我们要将target减去这个key，看看剩下的值是不是字典中固有的key，如果是，则直接把提取元素的Index和原有的元素的key合成一个list返回即可。如果不是则进行下一个元素的提取。如果遍历完事之后，还没发现有能返回的情况，就说明这个列表中的元素不能组成target值，我们应该返回False，但是本题说明肯定会有一个解，那咱就不考虑这种情况发生了。\n\n\n4.7.3 代码展示\n\nclass Solution:\n    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:\n        #构建一个dict，储存遍历数组的信息，以list的值为key，以list的index为值\n        store = dict()\n        #遍历数组，要提取每个元素的值和Index，这里要用enumerate函数\n        for i,j in enumerate(nums):\n            if target - j in store:\n                return [i,store[target - j]] \n                #这里就显示出了用key来进行dict里内容的对比的好处，如果这个值是dict的key\n                #就可以直接调用value的内容了，相反如果把index作为dict的key，list的元素\n                #作为dict的值，那我们如果要调用dict某一元素特定的key是很难的，但是调用\n                #其的value是很容易的，直接把对应的key输入进去就行了。所以，我们在今后做\n                #算法题的时候，一定要把返回的东西设为字典的value。\n            else:\n                store[j] = i"
+  },
+  {
+    "objectID": "Hash.html#代码展示-6",
+    "href": "Hash.html#代码展示-6",
+    "title": "4  哈希",
+    "section": "4.8 代码展示",
+    "text": "4.8 代码展示\n\nclass Solution:\n    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:\n        #构建一个dict，储存遍历数组的信息，以list的值为key，以list的index为值\n        store = dict()\n        #遍历数组，要提取每个元素的值和Index，这里要用enumerate函数\n        for i,j in enumerate(List):\n            if target - j in store:\n                return [i,store[target - j]] \n                #这里就显示出了用key来进行dict里内容的对比的好处，如果这个值是dict的key\n                #就可以直接调用value的内容了，相反如果把index作为dict的key，list的元素\n                #作为dict的值，那我们如果要调用dict某一元素特定的key是很难的，但是调用\n                #其的value是很容易的，直接把对应的key输入进去就行了。所以，我们在今后做\n                #算法题的时候，一定要把返回的东西设为字典的value。\n            else:\n                store[j] = i"
+  },
+  {
+    "objectID": "Hash.html#lc219.-存在重复元素-ii",
+    "href": "Hash.html#lc219.-存在重复元素-ii",
+    "title": "4  哈希",
+    "section": "4.8 LC219. 存在重复元素 II",
+    "text": "4.8 LC219. 存在重复元素 II\n\n4.8.1 题目描述\n给你一个整数数组nums和一个整数k，判断数组中是否存在两个不同的索引i和j，满足nums[i] == nums[j]且abs(i - j) &lt;= k。如果存在，返回true；否则，返回false。\n示例一：\n\n输入：nums = [1,2,3,1], k = 3\n\n\n输出：true\n\n示例二：\n\n输入：nums = [1,0,1,1], k = 1\n\n\n输出：true\n\n示例三：\n\n输入：nums = [1,2,3,1,2,3], k = 2\n\n\n输出：false\n\n提示\n\n1 &lt;= nums.length &lt;= 105\n-109 &lt;= nums[i] &lt;= 109\n0 &lt;= k &lt;= 105\n\n\n\n4.8.2 解题思路\n首先我们还是要用dict来去储存nums的信息，因为这里面涉及到两方面的比较，一个是value的比较，另一个是Index的比较。其中第一步要比较的是value，如果value值相同，我们再去比较两个相同值的Index差值。这里把value作为key，把Index作为字典的value。\n每遍历一个元素，我们都要把它的值和字典中已有的每个key进行，比较，如果key相同，则进行Index的差值计算。如果这个差值小于k，则说明成功，返回true，如果全部遍历完还没有成功的，那就意味着传入的list里的元素没有符合这个条件的，返回False。\n\n\n4.8.3 代码展示\n\nclass Solution:\n    def containsNearbyDuplicate(self, nums: List[int], k: int) -&gt; bool:\n        #构建一个字典，一般涉及到两个维度的比较都要用字典\n        store = dict()\n        #开始去遍历数组中的元素，提取Index和value\n        for i,j in enumerate(nums):\n            #先判断value是否相等\n            if j in store:\n                #大家想想如果list的value不作为key的话，\n                #想要查看这个value是否在dict中的话，得有\n                #多费劲\n                '''\n                这里要考虑一种情况，比如说输入的例子是[1,2,3,1,1,4,5]，2这种情况，当\n                遍历到第二个1的时候，发现值虽然相同，但是Index的距离太远，这时我们要存储\n                第二个一，我们又是以list的value作为dict的key的。这时储存的就是dict[1]=3。\n                势必要把第一个一给代替掉（字典作为哈希表的特点是不在乎顺序），我们care不care\n                ，我们真正care的是最新的1的index，因为第一个1如果第一次配对失败，它就再也没有\n                机会成功配对了，我们要记录最新的1，因为它是有可能配对的，如果我们用list去储存\n                遍历的元素，就要考虑那个是最新的1了，这里再对比配对的话就非常麻烦，而用字典我们\n                每次储存的都是最新的值所拥有的Index。\n                '''\n                #这里判断index之差是否大于小于等于k\n                if i - store[j] &lt;= k:\n                    return True\n            store[j] = i\n\n        #如果都没有遍历都没有成功，则返回False\n        return False"
   }
 ]

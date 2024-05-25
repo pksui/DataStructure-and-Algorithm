@@ -1,11 +1,4 @@
-from collections import deque
+s = dict()
 
-s = deque()
-
-s.append(1)
-s.pop()
-
-if s[0] == 1:
-    print("yes")
-else:
-    print("No")
+s[1] = 5
+s[1] = 7
